@@ -1,1 +1,4 @@
-My gentoo-overlay for some stuff I need on my gentoo machines
+gentoo overlay for the following stuff:
+- raspberrypi related stuff
+- odroid c1+ related stuff
+- and a lot of more
