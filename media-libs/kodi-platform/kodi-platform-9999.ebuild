@@ -20,7 +20,7 @@ IUSE=""
 
 DEPEND="
 	|| ( media-tv/kodi media-tv/kodi-rpi media-tv/kodi-odroidc1 )
-	dev-libs/libplatform
+	dev-libs/libp8platform
 	dev-libs/tinyxml
 	"
 
