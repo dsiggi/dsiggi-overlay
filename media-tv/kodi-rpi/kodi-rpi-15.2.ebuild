@@ -23,7 +23,7 @@ HOMEPAGE="http://kodi.tv/ http://kodi.wiki/"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="airplay alsa avahi bluetooth bluray caps cec css dbus debug fishbmc +gles goom java joystick midi mysql nfs profile projectm pulseaudio pvr rtmp samba sftp spectrum test texturepacker udisks upnp upower usb waveform webserver"
+IUSE="airplay alsa avahi bluetooth bluray caps cec css dbus debug fishbmc +gles goom java joystick midi mysql nfs profile projectm pulseaudio rtmp samba sftp spectrum test texturepacker udisks upnp upower usb waveform webserver"
 REQUIRED_USE="
 	udisks? ( dbus )
 	upower? ( dbus )
@@ -94,8 +94,7 @@ RDEPEND="${COMMON_DEPEND}
 	!media-tv/kodi
 	!media-tv/kodi-odroidc1
 	udisks? ( sys-fs/udisks:0 )
-	upower? ( || ( sys-power/upower sys-power/upower-pm-utils ) )
-	pvr? ( media-plugins/kodi-pvr )"
+	upower? ( || ( sys-power/upower sys-power/upower-pm-utils ) )"
 DEPEND="${COMMON_DEPEND}
 	app-arch/xz-utils
 	dev-lang/swig
