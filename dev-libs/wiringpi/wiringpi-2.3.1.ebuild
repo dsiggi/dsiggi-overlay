@@ -8,12 +8,12 @@ inherit eutils
 
 DESCRIPTION="A 'wiring' like library for the Raspberry Pi"
 HOMEPAGE="http://wiringpi.com/"
-SRC_URI="https://dsiggi.homenet.org/files/gentoo/${P}.tar.gz"
+SRC_URI="https://git.drogon.net/?p=wiringPi;a=snapshot;h=78b5c323b74de782df58ee558c249e4e4fadd25f;sf=tgz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd"
-IUSE="+gpio"
+IUSE="+util"
 
 RDEPEND=""
 DEPEND="${RDEPEND}"
@@ -22,12 +22,12 @@ S="${WORKDIR}/wiringPi-78b5c32"
 
 src_prepare() {
 	MAKEDIRS="wiringPi devLib"
-	use gpio && MAKEDIRS="$MAKEDIRS gpio"
+	use util && MAKEDIRS="$MAKEDIRS gpio"
 
 	cd ${S}
 	epatch "${FILESDIR}/wiringPi_Makefile.patch"
 	epatch "${FILESDIR}/devLib_Makefile.patch"
-	use gpio && epatch "${FILESDIR}/gpio_Makefile.patch"
+	use util && epatch "${FILESDIR}/gpio_Makefile.patch"
 }
 
 src_compile() {
