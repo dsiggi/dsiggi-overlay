@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -9,35 +9,32 @@ EAPI="5"
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="sqlite"
 
-inherit eutils linux-info python-single-r1 multiprocessing autotools toolchain-funcs user
-
-CODENAME="Isengard"
-case ${PV} in
-9999)
-	EGIT_REPO_URI="git://github.com/Owersun/xbmc.git"
-	inherit git-r3
-	;;
-*|*_p*)
-	MY_PV=${PV/_p/_r}
-	MY_P="${PN}-${MY_PV}"
-	SRC_URI="http://mirrors.kodi.tv/releases/source/${MY_PV}-${CODENAME}.tar.gz -> ${P}.tar.gz
-		https://github.com/xbmc/xbmc/archive/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz
-		!java? ( http://mirrors.kodi.tv/releases/source/${MY_P}-generated-addons.tar.xz )"
-	KEYWORDS="~amd64 ~x86"
-
-	S=${WORKDIR}/${P}
-	;;
-esac
+inherit eutils linux-info python-single-r1 multiprocessing autotools toolchain-funcs flag-o-matic
 
 DESCRIPTION="Kodi is a free and open source media-player and entertainment hub"
 HOMEPAGE="http://kodi.tv/ http://kodi.wiki/"
-
 LICENSE="GPL-2"
+
+CODENAME="Isengard"
+ODROID_COMMIT="3a59f4b03708451273668022f415123522f634fd"
+KEYWORDS="~arm"
+
+use raspberrypi && S=${WORKDIR}/xbmc-${PV}-${CODENAME}
+use odroidc1 && S=${WORKDIR}/xbmc-${ODROID_COMMIT}
+
+#Setting the SRC_URI's for raspberrypi, odroidc1 or the normal kodi
+SRC_URI="raspberrypi? ( http://mirrors.kodi.tv/releases/source/${P}-${CODENAME}.tar.gz -> ${P}.tar.gz
+					https://github.com/xbmc/xbmc/archive/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz )
+		odroidc1? ( https://github.com/Owersun/xbmc/archive/${ODROID_COMMIT}.tar.gz -> ${P}-odroidc1.tar.gz )"
+
+
 SLOT="0"
-IUSE="airplay alsa avahi bluetooth bluray caps cec css dbus debug fishbmc goom java joystick midi mysql nfs profile projectm pulseaudio rtmp samba sftp spectrum texturepacker udisks upnp upower usb waveform webserver"
+IUSE="airplay alsa avahi bluetooth bluray caps cec css dbus debug goom joystick midi mysql nfs odroidc1 profile pulseaudio raspberrypi +samba sftp test texturepacker udisks upnp upower +usb waveform webserver"
+
 REQUIRED_USE="
 	udisks? ( dbus )
 	upower? ( dbus )
+	^^ ( raspberrypi odroidc1 )
 "
 
 COMMON_DEPEND="${PYTHON_DEPS}
@@ -67,25 +64,23 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	media-libs/jasper
 	media-libs/jbigkit
 	>=media-libs/libass-0.9.7
-	bluray? ( >=media-libs/libbluray-0.7.0 )
+	bluray? ( media-libs/libbluray )
 	css? ( media-libs/libdvdcss )
 	media-libs/libmad
 	media-libs/libmodplug
 	media-libs/libmpeg2
 	media-libs/libogg
-	media-libs/libpng
-	projectm? ( media-libs/libprojectm )
+	media-libs/libpng:0=
 	media-libs/libsamplerate
 	joystick? ( media-libs/libsdl2 )
 	>=media-libs/taglib-1.8
 	media-libs/libvorbis
-	media-libs/tiff
+	media-libs/tiff:0=
 	pulseaudio? ( media-sound/pulseaudio )
 	media-sound/wavpack
 	>=media-video/ffmpeg-2.6:=[encode]
-	rtmp? ( media-video/rtmpdump )
 	avahi? ( net-dns/avahi )
-	nfs? ( net-fs/libnfs )
+	nfs? ( net-fs/libnfs:= )
 	webserver? ( net-libs/libmicrohttpd[messages] )
 	sftp? ( net-libs/libssh[sftp] )
 	net-misc/curl
@@ -94,27 +89,25 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	dbus? ( sys-apps/dbus )
 	caps? ( sys-libs/libcap )
 	sys-libs/zlib
-	virtual/jpeg
-	usb? ( virtual/libusb )
+	virtual/jpeg:0=
+	usb? ( virtual/libusb:1 )
 	mysql? ( virtual/mysql )
-	media-libs/aml-odroidc1
-	media-libs/odroidc1-mali-fb"
+	raspberrypi? ( media-video/ffmpeg[mmal] media-libs/raspberrypi-userland )
+	odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
+	"
 RDEPEND="${COMMON_DEPEND}
-	!media-tv/xbmc
+	${MY_DEPEND}
 	udisks? ( sys-fs/udisks:0 )
 	upower? ( || ( sys-power/upower sys-power/upower-pm-utils ) )"
 DEPEND="${COMMON_DEPEND}
 	app-arch/xz-utils
 	dev-lang/swig
-	dev-libs/crossguid
 	dev-util/gperf
 	texturepacker? ( media-libs/giflib )
 	dev-util/cmake
-	x86? ( dev-lang/nasm )
-	java? ( virtual/jre )"
-# Force java for latest git version to avoid having to hand maintain the
-# generated addons package.  #488118
-[[ ${PV} == "9999" ]] && DEPEND+=" virtual/jre"
+	virtual/jre
+	test? ( dev-cpp/gtest )"
+
 
 CONFIG_CHECK="~IP_MULTICAST"
 ERROR_IP_MULTICAST="
@@ -123,18 +116,23 @@ Please consider enabling IP_MULTICAST under Networking options.
 "
 
 pkg_setup() {
+	#If raspberrypi-userland is installed in /opt/vc, we have to add some flags
+	if [ -d /opt/vc ]; then
+		append-flags "-I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux -I/opt/vc/include/interface/IL"
+		append-ldflags "-L/opt/vc/lib"
+	fi
+
 	check_extra_config
 	python-single-r1_pkg_setup
-	enewgroup input
 }
 
 src_unpack() {
-	[[ ${PV} == "9999" ]] && git-r3_src_unpack || default
+	default
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-9999-no-arm-flags.patch #400617
-	epatch "${FILESDIR}"/${PN}-9999-texturepacker.patch
+	epatch "${FILESDIR}"/${P}-no-arm-flags.patch #400617
+	epatch "${FILESDIR}"/${P}-texturepacker.patch
 	epatch_user #293109
 
 	# some dirs ship generated autotools, some dont
@@ -152,10 +150,9 @@ src_prepare() {
 	done
 	multijob_finish
 	elibtoolize
-
-	if [[ ${PV} == "9999" ]] || use java ; then #558798
-		tc-env_build emake -f codegenerator.mk
-	fi
+	
+	#Java related stuff
+	tc-env_build emake -f codegenerator.mk
 
 	# Disable internal func checks as our USE/DEPEND
 	# stuff handles this just fine already #408395
@@ -182,21 +179,28 @@ src_configure() {
 	# No configure flage for this #403561
 	export ac_cv_lib_bluetooth_hci_devid=$(usex bluetooth)
 	# Requiring java is asine #434662
-	[[ ${PV} != "9999" ]] && export ac_cv_path_JAVA_EXE=$(which $(usex java java true))
+	export ac_cv_path_JAVA_EXE=$(which java)
+
+	if use raspberrypi; then
+		MY_ECONF="--with-platform=raspberry-pi --enable-player=omxplayer --disable-vtbdecoder"
+	elif use odroidc1; then
+		MY_ECONF="-enable-codec=amcodec"
+	fi
 
 	econf \
 		--docdir=/usr/share/doc/${PF} \
 		--disable-ccache \
-		--disable-optimizations \
+		--enable-optimizations \
 		--with-ffmpeg=shared \
-		--enable-codec=amcodec \
 		--enable-gles \
-		--disable-gl \
 		--disable-x11 \
-		--disable-vdpau \
-		--disable-vaapi \
-		--disable-rsxs \
-		--disable-gtest \
+		--disable-gl \
+		--disable-projectm \
+		--disable-fishbmc \
+		--disable-spectrum \
+		--disable-rsxs\
+		--disable-rtmp \
+		${MY_ECONF} \
 		$(use_enable alsa) \
 		$(use_enable airplay) \
 		$(use_enable avahi) \
@@ -206,24 +210,22 @@ src_configure() {
 		$(use_enable css dvdcss) \
 		$(use_enable dbus) \
 		$(use_enable debug) \
-		$(use_enable fishbmc) \
 		$(use_enable goom) \
 		$(use_enable joystick) \
 		$(use_enable midi mid) \
 		$(use_enable mysql) \
 		$(use_enable nfs) \
 		$(use_enable profile profiling) \
-		$(use_enable projectm) \
 		$(use_enable pulseaudio pulse) \
-		$(use_enable rtmp) \
 		$(use_enable samba) \
 		$(use_enable sftp ssh) \
-		$(use_enable spectrum) \
 		$(use_enable usb libusb) \
+		$(use_enable test gtest) \
 		$(use_enable texturepacker) \
 		$(use_enable upnp) \
 		$(use_enable waveform) \
 		$(use_enable webserver)
+	
 }
 
 src_compile() {
@@ -233,9 +235,6 @@ src_compile() {
 src_install() {
 	default
 	rm "${ED}"/usr/share/doc/*/{LICENSE.GPL,copying.txt}*
-
-	#domenu tools/Linux/kodi.desktop
-	#newicon media/icon48x48.png kodi.png
 
 	# Remove optional addons (platform specific).
 	local disabled_addons=(
@@ -264,27 +263,65 @@ src_install() {
 	python_domodule tools/EventClients/lib/python/xbmcclient.py
 	python_newscript "tools/EventClients/Clients/Kodi Send/kodi-send.py" kodi-send
 
-	#Install additional stuff for odroid
-	dodir /etc/conf.d
-	newconfd ${FILESDIR}/kodi-confd kodi
-
+	#Now install some stuff
+	
+	#Initd-script and config file
 	dodir /etc/init.d
 	newinitd ${FILESDIR}/kodi-initd kodi
 
-	dodir /etc/local.d
-	exeinto /etc/local.d
-	doexe ${FILESDIR}/kodi-permissions.start
+	dodir /etc/conf.d
+	newconfd ${FILESDIR}/kodi-confd kodi
 
-	dodir /etc/udev/rules.d
-	insinto /etc/udev/rules.d
+	#polkit rules
+	if use upower; then
+		dodir /etc/polkit-1/rules.d
+		insinto /etc/polkit-1/rules.d
+		doins ${FILESDIR}/60-kodi.rules
+	fi
+
+	#udev related stuff
+	dodir /usr/share/kodi/udev-configs
+	insinto /usr/share/kodi/udev-configs
 	doins ${FILESDIR}/99-input.rules
-	doins ${FILESDIR}/10-permissions.rules
+	if use raspberrypi; then
+		doins ${FILESDIR}/10-vchiq-permissions.rules
+	elif use odroidc1; then
+		doins ${FILESDIR}/10-mali-permissions.rules
+		dodir /usr/share/kodi/local.d
+		exeinto /usr/share/kodi/local.d
+		doexe ${FILESDIR}/kodi-permissions.start
+	fi
 }
 
-pkg_postinst(){
-	elog "A init-service-file is installed (/etc/init.d/kodi)"
-	elog "Configure it in /etc/conf.d/kodi"
-	elog "/etc/local.d/kodi-permissions.sh is used to set some permissions that are needed to start kodi as a normal user"
-	elog "At the user to the groups video, audio and input!"
-}
+pkg_postinst() {
+	if use upower; then
+		elog "To shutdown and reboot from kodi, edit the file"
+		elog "/etc/polkit-1/rules.d/60-kodi.rules"
+		elog "and replace \"YourUsernameHere\" with the username which is kodi running"
+		elog ""
+	else
+		elog "If you would shutdown your computer from kodi as a non root user,"
+		elog "please install kodi with the USE-Flag \"upower\" enabled"
+		elog ""
+	fi
+
+	elog "Some udev-rules has installed in \"/usr/share/kodi/udev-configs\"."
+	elog "If you wish to use kodi as an non root user, install sys-fs/udev an copy the rules to"
+	elog "/etc/udev/rules.d"
+	elog "Also add your user to the group \"input\" to use a keyboard or mouse in kodi"
+	elog "Also add your user to the group \"video\" that you can start kodi."
+	elog ""
 	
+	if use odroidc1; then
+		elog "A local.d-Script has installed in \"/usr/share/kodi/local.d\"."
+		elog "Do adjust some permissions to start kodi as non root user"
+		elog "copy this Script to \"/etc/local.d\"."
+		elog ""
+	fi
+
+	elog "A init.d-Script called \"kodi\" has been installed."
+	elog "Edit \"/etc/conf.d/kodi\" and add your username."
+	elog "Then add the init.d-Script to a runlevel."
+	elog "\$ rc-update add kodi default"
+	elog ""
+}

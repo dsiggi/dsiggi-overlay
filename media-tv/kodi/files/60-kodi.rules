@@ -1,0 +1,7 @@
+polkit.addRule(function(action, subject) {
+        if (( (action.id.indexOf("org.freedesktop.udisks.") == 0) || (action.id.indexOf("org.freedesktop.upower.")== 0) || (action.id.indexOf("org.freedesktop.consolekit.")== 0) ) &&
+        subject.isUser("YourUsernameHere")) {
+        return polkit.Result.YES;
+        }
+});
+
