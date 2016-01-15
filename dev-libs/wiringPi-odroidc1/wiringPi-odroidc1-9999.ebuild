@@ -16,16 +16,29 @@ SLOT="0"
 KEYWORDS="~arm"
 IUSE="+util"
 
-RDEPEND=""
-DEPEND="${RDEPEND}"
-
 S="${WORKDIR}/${P}"
+
+pkg_setup() {
+
+	ewarn "If you use the FEATURES \"distcc\" and/or \"distcc-pump\""
+	ewarn "please disable this FEATURES!"
+	ewarn "The compiling of the libs wan't work with thes"
+	
+	#The gpio-util can only be build, when the libs are installed in the system!!!
+	if use util; then
+		if ! [ -f /usr/lib/libwiringPi.so.2.0 ]; then
+			eerror "The gpio-util can only be build, when the libs are installed in the system!!!"
+			eerror "So please emerge this package the first time without the \"util\"-useflag."
+			die
+		fi
+	fi
+}
 
 src_prepare() {
 	MAKEDIRS="wiringPi devLib"
 	use util && MAKEDIRS="$MAKEDIRS gpio"
 
-	cd ${S}
+	#cd ${S}
 	epatch "${FILESDIR}/wiringPi_Makefile.patch"
 	epatch "${FILESDIR}/devLib_Makefile.patch"
 	use util && epatch "${FILESDIR}/gpio_Makefile.patch"
@@ -46,3 +59,4 @@ src_install() {
 		emake DESTDIR="${D}/usr/" PREFIX="" install || die
 	done
 }
+
