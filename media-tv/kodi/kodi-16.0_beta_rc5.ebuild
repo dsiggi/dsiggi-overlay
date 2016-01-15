@@ -11,25 +11,21 @@ PYTHON_REQ_USE="sqlite"
 
 inherit eutils linux-info python-single-r1 multiprocessing autotools toolchain-funcs flag-o-matic
 
-DESCRIPTION="Kodi is a free and open source media-player and entertainment hub"
+DESCRIPTION="Kodi is a free and open source media-player and entertainment hub (Special ebuild for raspberrypi/odroidc1"
 HOMEPAGE="http://kodi.tv/ http://kodi.wiki/"
 LICENSE="GPL-2"
 
-CODENAME="Isengard"
-ODROID_COMMIT="3a59f4b03708451273668022f415123522f634fd"
+CODENAME="Jarvis"
+MY_PV=${PV%%_beta*}
+BVERSION=${PV##*rc}
 KEYWORDS="~arm"
 
-use raspberrypi && S=${WORKDIR}/xbmc-${PV}-${CODENAME}
-use odroidc1 && S=${WORKDIR}/xbmc-${ODROID_COMMIT}
+S=${WORKDIR}/xbmc-${MY_PV}b${BVERSION}-${CODENAME}
 
-#Setting the SRC_URI's for raspberrypi, odroidc1 or the normal kodi
-SRC_URI="raspberrypi? ( http://mirrors.kodi.tv/releases/source/${P}-${CODENAME}.tar.gz -> ${P}.tar.gz
-					https://github.com/xbmc/xbmc/archive/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz )
-		odroidc1? ( https://github.com/Owersun/xbmc/archive/${ODROID_COMMIT}.tar.gz -> ${P}-odroidc1.tar.gz )"
-
+SRC_URI="http://github.com/xbmc/xbmc/archive/${MY_PV}b${BVERSION}-${CODENAME}.tar.gz"
 
 SLOT="0"
-IUSE="airplay alsa avahi bluetooth bluray caps cec css dbus debug goom joystick midi mysql nfs odroidc1 profile pulseaudio raspberrypi +samba sftp test texturepacker udisks upnp upower +usb waveform webserver"
+IUSE="airplay alsa avahi bluetooth bluray caps cec css dbus debug joystick midi mysql nfs odroidc1 profile pulseaudio raspberrypi +samba sftp spectrum test texturepacker udisks upnp upower +usb waveform webserver"
 
 REQUIRED_USE="
 	udisks? ( dbus )
@@ -92,11 +88,11 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	virtual/jpeg:0=
 	usb? ( virtual/libusb:1 )
 	mysql? ( virtual/mysql )
+	media-sound/dcadec
 	raspberrypi? ( media-video/ffmpeg[mmal] media-libs/raspberrypi-userland )
 	odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
 	"
 RDEPEND="${COMMON_DEPEND}
-	${MY_DEPEND}
 	udisks? ( sys-fs/udisks:0 )
 	upower? ( || ( sys-power/upower sys-power/upower-pm-utils ) )"
 DEPEND="${COMMON_DEPEND}
@@ -106,8 +102,13 @@ DEPEND="${COMMON_DEPEND}
 	texturepacker? ( media-libs/giflib )
 	dev-util/cmake
 	virtual/jre
-	test? ( dev-cpp/gtest )"
+	test? ( dev-cpp/gtest )
+	"
 
+PDEPEND="
+	waveform? ( media-plugins/kodi-visualization-waveform )
+	spectrum? ( media-plugins/kodi-visualization-spectrum )
+	"
 
 CONFIG_CHECK="~IP_MULTICAST"
 ERROR_IP_MULTICAST="
@@ -131,9 +132,15 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-no-arm-flags.patch #400617
-	epatch "${FILESDIR}"/${P}-texturepacker.patch
+	epatch "${FILESDIR}"/kodi-15.2-no-arm-flags.patch #400617
+	epatch "${FILESDIR}"/kodi-15.2-texturepacker.patch
 	epatch_user #293109
+
+	#Patches only for odroidc1 (Only needed till 16.0_beta_rc2)
+	if use odroidc1 && [ $BVERSION -le 2 ]; then
+		epatch "${FILESDIR}"/${PN}-16.0_beta_rc2-odroid-platform.patch
+		epatch "${FILESDIR}"/${PN}-16.0_beta_rc2-0014-aml-Remove-dependency-on-libamplayer-and-amffmpeg.patch
+	fi
 
 	# some dirs ship generated autotools, some dont
 	multijob_init
@@ -182,9 +189,9 @@ src_configure() {
 	export ac_cv_path_JAVA_EXE=$(which java)
 
 	if use raspberrypi; then
-		MY_ECONF="--with-platform=raspberry-pi --enable-player=omxplayer --disable-vtbdecoder"
+		MY_ECONF="--with-platform=raspberry-pi --enable-player=omxplayer"
 	elif use odroidc1; then
-		MY_ECONF="-enable-codec=amcodec"
+		MY_ECONF="--enable-codec=amcodec"
 	fi
 
 	econf \
@@ -195,11 +202,8 @@ src_configure() {
 		--enable-gles \
 		--disable-x11 \
 		--disable-gl \
-		--disable-projectm \
-		--disable-fishbmc \
-		--disable-spectrum \
-		--disable-rsxs\
 		--disable-rtmp \
+		--disable-vtbdecoder \
 		${MY_ECONF} \
 		$(use_enable alsa) \
 		$(use_enable airplay) \
@@ -210,7 +214,6 @@ src_configure() {
 		$(use_enable css dvdcss) \
 		$(use_enable dbus) \
 		$(use_enable debug) \
-		$(use_enable goom) \
 		$(use_enable joystick) \
 		$(use_enable midi mid) \
 		$(use_enable mysql) \
@@ -223,13 +226,11 @@ src_configure() {
 		$(use_enable test gtest) \
 		$(use_enable texturepacker) \
 		$(use_enable upnp) \
-		$(use_enable waveform) \
 		$(use_enable webserver)
-	
 }
 
 src_compile() {
-	emake V=1
+	emake
 }
 
 src_install() {
