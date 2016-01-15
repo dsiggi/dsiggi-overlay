@@ -274,8 +274,8 @@ src_install() {
 
 	#polkit rules
 	if use upower; then
-		dodir /usr/share/kodi/polkit-configs
-		insinto /usr/share/kodi/polkit-configs
+		dodir /etc/polkit-1/rules.d
+		insinto /etc/polkit-1/rules.d
 		doins ${FILESDIR}/60-kodi.rules
 	fi
 
@@ -295,8 +295,7 @@ src_install() {
 
 pkg_postinst() {
 	if use upower; then
-		elog "A polkit-rule was installed to /usr/share/kodi/polkit-rules"
-		elog "If you want to shutdown from the kodi menu, copy it to"
+		elog "To shutdown and reboot from kodi, edit the file"
 		elog "/etc/polkit-1/rules.d/60-kodi.rules"
 		elog "and replace \"YourUsernameHere\" with the username which is kodi running"
 		elog ""
