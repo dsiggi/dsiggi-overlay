@@ -1,20 +1,5 @@
 --- gpio/Makefile	2015-12-02 16:13:50.000000000 +0100
 +++ gpio/Makefile	2016-01-03 12:48:19.489456606 +0100
-@@ -33,11 +33,11 @@ endif
- #DEBUG	= -g -O0
- DEBUG	= -O2
- CC	= gcc
--INCLUDE	= -I$(DESTDIR)$(PREFIX)/include
-+INCLUDE	= -I../wiringPi -I../devLib
- CFLAGS	= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe
- 
--LDFLAGS	= -L$(DESTDIR)$(PREFIX)/lib
--LIBS    = -lwiringPi -lwiringPiDev -lpthread
-+LDFLAGS	= -L../wiringPi -L../devLib
-+LIBS    = -lwiringPi -lwiringPiDev -lpthread
- 
- # May not need to  alter anything below this line
- ###############################################################################
 @@ -72,13 +72,14 @@ tags:	$(SRC)
  .PHONY:	install
  install: gpio
