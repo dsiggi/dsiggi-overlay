@@ -26,7 +26,7 @@ pkg_setup() {
 	
 	#The gpio-util can only be build, when the libs are installed in the system!!!
 	if use util; then
-		if ! [ -f /usr/lib/libwiringPi.so.2.0 ]; then
+		if ! [ -f /usr/lib/libwiringPi.so ]; then
 			eerror "The gpio-util can only be build, when the libs are installed in the system!!!"
 			eerror "So please emerge this package the first time without the \"util\"-useflag."
 			die
