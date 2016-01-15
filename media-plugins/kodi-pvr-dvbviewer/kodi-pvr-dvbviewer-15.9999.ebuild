@@ -4,11 +4,12 @@
 
 EAPI=5
 
-EGIT_REPO_URI="https://github.com/kodi-pvr/pvr.mediaportal.tvserver.git"
+EGIT_REPO_URI="https://github.com/kodi-pvr/pvr.dvbviewer.git"
+EGIT_BRANCH="Isengard"
 
 inherit git-r3 cmake-utils kodi-addon
 
-DESCRIPTION="Kodi's MediaPortal TVServer client addon"
+DESCRIPTION="Kodi's DVBViewer client addon"
 HOMEPAGE="http://kodi.tv"
 SRC_URI=""
 
@@ -18,11 +19,12 @@ KEYWORDS="~arm"
 IUSE=""
 
 DEPEND="
-	=media-tv/kodi-16*
+	=media-tv/kodi-15*
 	media-libs/kodiplatform
 	dev-libs/tinyxml
 	"
 
 RDEPEND="
+	media-libs/kodiplatform
 	dev-libs/tinyxml
 	"

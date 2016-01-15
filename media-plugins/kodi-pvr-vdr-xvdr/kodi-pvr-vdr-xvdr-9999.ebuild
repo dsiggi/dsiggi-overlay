@@ -8,7 +8,6 @@ EAPI="4"
 inherit git-2 autotools multilib eutils
 
 EGIT_REPO_URI="git://github.com/pipelka/xbmc-addon-xvdr.git"
-EGIT_BRANCH="Isengard"
 
 DESCRIPTION="VDR-XVDR addon for Kodi"
 HOMEPAGE="https://github.com/pipelka/xbmc-addon-xvdr"

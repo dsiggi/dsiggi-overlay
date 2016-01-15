@@ -5,7 +5,6 @@
 EAPI=5
 
 EGIT_REPO_URI="https://github.com/kodi-pvr/pvr.mythtv.git"
-EGIT_BRANCH="Isengard"
 
 inherit git-r3 cmake-utils kodi-addon
 
@@ -19,6 +18,6 @@ KEYWORDS="~arm"
 IUSE=""
 
 DEPEND="
-	media-tv/kodi
+	=media-tv/kodi-16*
 	media-libs/kodiplatform
 	"
