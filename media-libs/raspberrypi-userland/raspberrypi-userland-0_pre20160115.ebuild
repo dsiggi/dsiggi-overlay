@@ -32,7 +32,7 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	links="libEGL.so libEGL_static.a libGLESv2.so libGLESv2__static.a"
+	links="libEGL.so libEGL_static.a libGLESv2.so libGLESv2_static.a"
 
 	dodir /usr/lib/opengl/${PN}
 	for f in $links; do
