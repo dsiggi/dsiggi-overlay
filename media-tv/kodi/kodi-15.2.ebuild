@@ -117,9 +117,13 @@ Please consider enabling IP_MULTICAST under Networking options.
 
 pkg_setup() {
 	#If raspberrypi-userland is installed in /opt/vc, we have to add some flags
-	if [ -d /opt/vc ]; then
-		append-flags "-I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux -I/opt/vc/include/interface/IL"
-		append-ldflags "-L/opt/vc/lib"
+	if use raspberrypi; then
+		if [ -d /opt/vc ]; then
+			append-flags "-I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux -I/opt/vc/include/interface/IL"
+			append-ldflags "-L/opt/vc/lib"
+		else
+			append-flags "-I/usr/include/interface/vcos/pthreads -I/usr/include/interface/vmcs_host/linux -I/usr/include/interface/IL"
+		fi
 	fi
 
 	check_extra_config
