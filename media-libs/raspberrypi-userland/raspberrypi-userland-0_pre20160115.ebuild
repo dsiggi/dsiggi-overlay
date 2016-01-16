@@ -31,12 +31,13 @@ src_configure() {
 
 src_install() {
 	cmake-utils_src_install
-	doenvd "${FILESDIR}"/04${PN}
 
-	# enable dynamic switching of the GL implementation
-	dodir /usr/lib/opengl
-	dosym ../../../opt/vc /usr/lib/opengl/${PN}
+	links="libEGL.so libEGL_static.a libGLESv2.so libGLESv2__static.a"
 
-	# tell eselect opengl that we do not have libGL
-	touch "${ED}"/opt/vc/.gles-only
+	dodir /usr/lib/opengl/${PN}
+	for f in $links; do
+		dosym ../../$f /usr/lib/opengl/${PN}/$f
+	done
+
+	touch "${ED}"/usr/lib/opengl/${PN}/.gles-only
 }
