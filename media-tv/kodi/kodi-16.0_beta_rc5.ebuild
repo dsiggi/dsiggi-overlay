@@ -91,6 +91,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	media-sound/dcadec
 	raspberrypi? ( media-video/ffmpeg[mmal] media-libs/raspberrypi-userland )
 	odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
+	dev-libs/crossguid
 	"
 RDEPEND="${COMMON_DEPEND}
 	udisks? ( sys-fs/udisks:0 )
