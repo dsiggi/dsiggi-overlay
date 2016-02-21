@@ -16,8 +16,8 @@ KEYWORDS="~arm"
 IUSE="+util"
 
 RDEPEND=""
-DEPEND="${RDEPEND}
-		util? ( dev-libs/wiringpi-util )"
+DEPEND="${RDEPEND}"
+PDEPEND="util? ( dev-libs/wiringpi-util )"
 
 S="${WORKDIR}/wiringPi-78b5c32"
 
