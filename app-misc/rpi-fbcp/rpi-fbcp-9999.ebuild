@@ -26,3 +26,9 @@ else
 	append-flags "-I/usr/include/interface/vcos/pthreads -I/usr/include/interface/vmcs_host/linux"
 fi
 
+src_install() {
+        into /usr
+        dobin ${WORKDIR}/${PF}_build/fbcp
+}
+
+
