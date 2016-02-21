@@ -1,0 +1,25 @@
+--- wiringPi/Makefile	2015-12-02 16:13:50.000000000 +0100
++++ wiringPi/Makefile	2016-01-03 12:29:04.932820466 +0100
+@@ -115,8 +115,7 @@ install:	$(DYNAMIC)
+ 	$Q echo "[Install Dynamic Lib]"
+ 	$Q install -m 0755 -d						$(DESTDIR)$(PREFIX)/lib
+ 	$Q install -m 0755 libwiringPi.so.$(VERSION)			$(DESTDIR)$(PREFIX)/lib/libwiringPi.so.$(VERSION)
+-	$Q ln -sf $(DESTDIR)$(PREFIX)/lib/libwiringPi.so.$(VERSION)	$(DESTDIR)/lib/libwiringPi.so
+-	$Q $(LDCONFIG)
++	$Q ln -sf  --relative $(DESTDIR)$(PREFIX)/lib/libwiringPi.so.$(VERSION)	$(DESTDIR)/lib/libwiringPi.so
+ 
+ .PHONY:	install-static
+ install-static:	$(STATIC)
+@@ -142,7 +141,6 @@ uninstall:
+ 	$Q echo "[UnInstall]"
+ 	$Q cd $(DESTDIR)$(PREFIX)/include/ && rm -f $(HEADERS)
+ 	$Q cd $(DESTDIR)$(PREFIX)/lib/     && rm -f libwiringPi.*
+-	$Q $(LDCONFIG)
+ 
+ 
+ .PHONY:	depend
+@@ -180,3 +178,4 @@ wpiExtensions.o: wiringPi.h mcp23008.h m
+ wpiExtensions.o: mcp23s17.h sr595.h pcf8574.h pcf8591.h mcp3002.h mcp3004.h
+ wpiExtensions.o: mcp4802.h mcp3422.h max31855.h max5322.h sn3218.h
+ wpiExtensions.o: drcSerial.h wpiExtensions.h
++
