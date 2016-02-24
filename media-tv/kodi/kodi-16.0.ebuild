@@ -18,7 +18,7 @@ LICENSE="GPL-2"
 CODENAME="Jarvis"
 KEYWORDS="~arm"
 
-S=${WORKDIR}/xbmc-${P}
+S=${WORKDIR}/xbmc-${PV}
 
 SRC_URI="http://ftp.uni-erlangen.de/pub/mirrors/gentoo/distfiles/${P}.tar.gz
 		 http://mirrors.kodi.tv/releases/source/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz"
