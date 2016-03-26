@@ -285,10 +285,10 @@ src_install() {
 	if use raspberrypi; then
 		doins ${FILESDIR}/10-vchiq-permissions.rules
 	elif use odroidc1; then
-		doins ${FILESDIR}/10-mali-permissions.rules
-		dodir /usr/share/kodi/local.d
-		exeinto /usr/share/kodi/local.d
-		doexe ${FILESDIR}/kodi-permissions.start
+		doins ${FILESDIR}/10-odroid.rules
+		#dodir /usr/share/kodi/local.d
+		#exeinto /usr/share/kodi/local.d
+		#doexe ${FILESDIR}/kodi-permissions.start
 	fi
 }
 
