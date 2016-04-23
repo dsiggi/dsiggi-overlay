@@ -20,7 +20,8 @@ KEYWORDS="~arm"
 
 S=${WORKDIR}/xbmc-${PV}-${CODENAME}
 
-SRC_URI="http://ftp.uni-erlangen.de/pub/mirrors/gentoo/distfiles/${P}.tar.gz
+SRC_URI="https://github.com/xbmc/xbmc/archive/${P}-${CODENAME}.tar.gz -> ${P}.tar.gz
+		 http://ftp.uni-erlangen.de/pub/mirrors/gentoo/distfiles/${P}.tar.gz
 		 http://mirrors.kodi.tv/releases/source/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz"
 
 SLOT="0"
@@ -195,7 +196,7 @@ src_configure() {
 	econf \
 		--docdir=/usr/share/doc/${PF} \
 		--disable-ccache \
-		--enable-optimizations \
+		--disable-optimizations \
 		--with-ffmpeg=shared \
 		--enable-gles \
 		--disable-x11 \
@@ -285,10 +286,10 @@ src_install() {
 	if use raspberrypi; then
 		doins ${FILESDIR}/10-vchiq-permissions.rules
 	elif use odroidc1; then
-		doins ${FILESDIR}/10-mali-permissions.rules
-		dodir /usr/share/kodi/local.d
-		exeinto /usr/share/kodi/local.d
-		doexe ${FILESDIR}/kodi-permissions.start
+		doins ${FILESDIR}/10-odroid.rules
+		#dodir /usr/share/kodi/local.d
+		#exeinto /usr/share/kodi/local.d
+		#doexe ${FILESDIR}/kodi-permissions.start
 	fi
 }
 

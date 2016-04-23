@@ -202,7 +202,7 @@ src_configure() {
 	econf \
 		--docdir=/usr/share/doc/${PF} \
 		--disable-ccache \
-		--enable-optimizations \
+		--disable-optimizations \
 		--with-ffmpeg=shared \
 		--enable-gles \
 		--disable-x11 \

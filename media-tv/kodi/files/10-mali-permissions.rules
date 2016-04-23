@@ -1,2 +1,0 @@
-KERNEL=="ump",GROUP="video",MODE="0660"
-KERNEL=="mali",GROUP="video",MODE="0660"
