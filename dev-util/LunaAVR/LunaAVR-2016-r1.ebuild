@@ -10,33 +10,33 @@ DESCRIPTION="Luna ist eine objektorientierte, moderne Basic/Pascal-ähnliche Pro
 HOMEPAGE="http://http://avr.myluna.de/"
 SRC_URI="http://avr.myluna.de/lib/exe/fetch.php?media=lunaavr-${PV}${PR}-linux.tar.gz -> ${PF}.tar.gz"
 LANGUAGES="de en"
-#URI for the Languafe Reference
-R_URI="http://avr.myluna.de/lib/exe/fetch.php?media=lunaavr-2016-05-01"
-#Filename of the Language Reference
-LREFERENCE=${R_URI##*=}
-
 IUSE="doc examples"
+#URI for the Languafe Reference
+R_VERSION="2016-05-01"
+R_URI="http://avr.myluna.de/lib/exe/fetch.php?media=lunaavr-$R_VERSION"
 
 for lang in ${LANGUAGES}; do
 			IUSE+=" l10n_${lang%:*}"
-			reference="l10n_${lang%:*}? ( ${R_URI}-${lang}.pdf -> ${LREFERENCE}-${lang}.pdf )"
-			SRC_URI_DOC+=" $reference"
+			reference="l10n_${lang%:*}? ( doc? ( ${R_URI}-${lang}.pdf -> lunaavr-${R_VERSION}-${lang}.pdf ) )"
+			SRC_URI+=" $reference"
 done
 
 #URI for the example projects
-E_URI="http://avr.myluna.de/lib/exe/fetch.php?media=luna-examples-2016.r1-160501.zip"
+E_VERSION="2016.r1-160501"
+E_URI="http://avr.myluna.de/lib/exe/fetch.php?media=luna-examples-${E_VERSION}.zip"
 E_FILE=${E_URI##*=}
-E_VER=${E_URI##*examples-}
-E_VER=${E_VER%%.zip}
-SRC_URI+=" examples? ( $E_URI -> $E_FILE )
-			doc? ( $SRC_URI_DOC )"
+SRC_URI+=" examples? ( $E_URI -> $E_FILE )"
 
 LICENSE="LunaAVR"
 SLOT="0"
 KEYWORDS="x86 amd64"
 
 
-RDEPEND=""
+RDEPEND="x11-libs/gtk+:2
+		 sys-libs/glibc
+		 dev-libs/glib
+		 virtual/libstdc++
+		 dev-libs/icu"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/lunaavr-${PV}${PR}-linux"
@@ -79,26 +79,29 @@ src_install() {
 	#Install documentation
 	if use doc; then
 		for lang in ${LANGUAGES}; do
-			if [ -f "${DISTDIR}"/${LREFERENCE}-${lang}.pdf ]; then
-				cp "${DISTDIR}"/${LREFERENCE}-${lang}.pdf "${D}/opt/LunaAVR/Language Reference/"
+			if [ -f "${DISTDIR}"/lunaavr-${R_VERSION}-${lang}.pdf ]; then
+				cp "${DISTDIR}"/lunaavr-${R_VERSION}-${lang}.pdf "${D}/opt/LunaAVR/Language Reference/"
 			fi
 		done
 	fi
 
 	#Install examples
 	if use examples; then
-		cd "${WORKDIR}/luna-examples-$E_VER/"
+		cd "${WORKDIR}/luna-examples-$E_VERSION/"
 		cp -R . "${D}"/opt/LunaAVR/Examples/
 	fi
 }
 
 pkg_postinst(){
 	if use doc; then
-		version=${LREFERENCE##lunaavr-}
-		elog "Installed Language Reference Version $version"
+		elog "Installed Language Reference Version $R_VERSION"
 	fi
 
 	if use examples; then
-			elog "Installed examples Version $E_VER"
+			elog "Installed examples Version $E_VERSION"
 	fi
+
+	MAIN_RELEASE=$(cat "${D}"/CHANGES.txt | head -n1 | cut -f3 -d" ")
+	BUILD=$(grep build CHANGES.TXT | head -n1 | cut -f2 -d" ")
+	elog "Installed LunaAVR Main Release: $MAIN_RELEASE BUILD: $BUILD"
 }
