@@ -74,7 +74,9 @@ src_install() {
 	done
 
 	#Install a menuentry
-	domenu "${FILESDIR}"/LunaAVR.desktop
+	#domenu "${FILESDIR}"/LunaAVR.desktop
+	make_desktop_entry /opt/LunaAVR/LunaAVR LunaAVR Luna-Icon-64x64 Development
+
 
 	#Install documentation
 	if use doc; then
@@ -90,6 +92,10 @@ src_install() {
 		cd "${WORKDIR}/luna-examples-$E_VERSION/"
 		cp -R . "${D}"/opt/LunaAVR/Examples/
 	fi
+
+	MAIN_RELEASE=$(cat "${D}"/opt/LunaAVR/CHANGES.TXT | head -n1 | cut -f3 -d" ")
+	BUILD=$(grep build "${D}"/opt/LunaAVR/CHANGES.TXT | head -n1 | cut -f2 -d" ")
+
 }
 
 pkg_postinst(){
@@ -101,7 +107,5 @@ pkg_postinst(){
 			elog "Installed examples Version $E_VERSION"
 	fi
 
-	MAIN_RELEASE=$(cat "${D}"/CHANGES.txt | head -n1 | cut -f3 -d" ")
-	BUILD=$(grep build CHANGES.TXT | head -n1 | cut -f2 -d" ")
 	elog "Installed LunaAVR Main Release: $MAIN_RELEASE BUILD: $BUILD"
 }
