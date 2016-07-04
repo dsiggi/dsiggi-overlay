@@ -36,7 +36,8 @@ RDEPEND="x11-libs/gtk+:2
 		 sys-libs/glibc
 		 dev-libs/glib
 		 virtual/libstdc++
-		 dev-libs/icu"
+		 dev-libs/icu
+		 dev-embedded/avrdude"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/lunaavr-${PV}${PR}-linux"
@@ -59,11 +60,15 @@ src_install() {
 		doexe "${S}"/$b
 	done
 
+	#Change the avrdude pathes in the config file
+	sed -i "s!ProgDir = /home/rgf/PROJEKTE/lunaavr-2015r1.build7862-linux/avrdude/avrdude!ProgDir = /usr/bin/avrdude!g" "${S}"/LunaAVR.cfg
+	sed -i "s!%home/avrdude.conf!/etc/avrdude.conf!g" "${S}"/LunaAVR.cfg
+
 	#Install the config to /etc an make a symlink
 	dodir /etc/
 	insinto /etc/
 	insopts	-m666
-	doins LunaAVR.cfg
+	doins "${S}"/LunaAVR.cfg
 	rm -f ${D}/opt/LunaAVR/LunaAVR.cfg
 	dosym /etc/LunaAVR.cfg /opt/LunaAVR/LunaAVR.cfg
 
