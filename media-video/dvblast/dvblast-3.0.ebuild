@@ -18,6 +18,6 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 
 
-RDEPEND="dev-libs/bitstream"
+RDEPEND="media-libs/bitstream"
 DEPEND="dev-libs/libev
 	${RDEPEND}"
