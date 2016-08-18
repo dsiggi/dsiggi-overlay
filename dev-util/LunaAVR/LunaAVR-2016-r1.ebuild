@@ -80,7 +80,7 @@ src_install() {
 
 	#Install a menuentry
 	#domenu "${FILESDIR}"/LunaAVR.desktop
-	make_desktop_entry /opt/LunaAVR/LunaAVR LunaAVR Luna-Icon-64x64 Development
+	make_desktop_entry /opt/LunaAVR/LunaAVR LunaAVR /usr/share/icons/hicolor/64x64/apps/Luna-Icon-64x64.png Development
 
 
 	#Install documentation

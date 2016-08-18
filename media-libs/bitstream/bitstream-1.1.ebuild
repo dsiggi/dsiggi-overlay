@@ -9,7 +9,7 @@ structures such as specified by MPEG, DVB, IETF, etc."
 HOMEPAGE="http://www.videolan.org/developers/bitstream.html"
 SRC_URI="https://get.videolan.org/bitstream/${PV}/${P}.tar.bz2"
 
-LICENSE="GPL-2+"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
