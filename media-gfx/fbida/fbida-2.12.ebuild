@@ -55,7 +55,8 @@ src_prepare() {
 		"${FILESDIR}"/ida-desktop.patch \
 		"${FILESDIR}"/${PN}-2.12-giflib-4.2.patch \
 		"${FILESDIR}"/${PN}-2.12-fprintf-format.patch \
-		"${FILESDIR}"/no-cairo-gl.patch
+		"${FILESDIR}"/no-cairo-gl.patch \
+		"${FILESDIR}"/no-egl.patch
 
 	tc-export CC CPP
 
@@ -92,8 +93,6 @@ src_configure() {
 }
 
 src_compile() {
-	epatch "${FILESDIR}"/no-egl.patch
-
 	emake verbose=yes
 }
 
