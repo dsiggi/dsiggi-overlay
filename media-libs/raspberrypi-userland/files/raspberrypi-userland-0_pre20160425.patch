@@ -1,0 +1,11 @@
+--- CMakeLists.txt.old  2016-05-22 19:19:59.036647042 +0200
++++ CMakeLists.txt      2016-05-22 19:17:42.326642891 +0200
+@@ -44,6 +44,7 @@
+ add_definitions(-DEGL_SERVER_DISPMANX)
+ add_definitions(-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64)
++add_definitions(-D_GNU_SOURCE)
+ 
+ # do we actually need this?
+ add_definitions(-D__VIDEOCORE4__)
+
+
