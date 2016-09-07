@@ -22,6 +22,7 @@ CDEPEND="
 	>=media-libs/freetype-2.0
 	media-libs/libexif
 	virtual/jpeg:*
+	x11-libs/libdrm
 	virtual/ttf-fonts
 	curl? ( net-misc/curl )
 	gif? ( media-libs/giflib:= )
@@ -34,7 +35,6 @@ CDEPEND="
 		x11-libs/libX11
 		x11-libs/libXpm
 		x11-libs/libXt
-		x11-libs/libdrm
 	)
 "
 
