@@ -92,6 +92,8 @@ src_configure() {
 }
 
 src_compile() {
+	epatch "${FILESDIR}"/no-egl.patch
+
 	emake verbose=yes
 }
 
