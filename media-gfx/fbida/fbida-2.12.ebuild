@@ -55,7 +55,7 @@ src_prepare() {
 		"${FILESDIR}"/ida-desktop.patch \
 		"${FILESDIR}"/${PN}-2.12-giflib-4.2.patch \
 		"${FILESDIR}"/${PN}-2.12-fprintf-format.patch \
-		/tmp/media-gfx/fbida/files/no-cairo-gl.patch
+		"${FILESDIR}"/no-cairo-gl.patch
 
 	tc-export CC CPP
 
