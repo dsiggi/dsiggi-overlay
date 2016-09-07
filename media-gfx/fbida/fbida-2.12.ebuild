@@ -18,15 +18,12 @@ IUSE="curl fbcon ghostscript +gif lirc +png scanner X +webp"
 
 CDEPEND="
 	!media-gfx/fbi
-	app-text/poppler
 	>=media-libs/fontconfig-2.2
 	>=media-libs/freetype-2.0
 	media-libs/libepoxy
 	media-libs/libexif
-	media-libs/mesa
 	virtual/jpeg:*
 	virtual/ttf-fonts
-	x11-libs/libdrm
 	curl? ( net-misc/curl )
 	gif? ( media-libs/giflib:= )
 	lirc? ( app-misc/lirc )
@@ -38,6 +35,7 @@ CDEPEND="
 		x11-libs/libX11
 		x11-libs/libXpm
 		x11-libs/libXt
+		x11-libs/libdrm
 	)
 "
 
