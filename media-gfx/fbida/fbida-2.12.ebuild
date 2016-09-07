@@ -20,7 +20,6 @@ CDEPEND="
 	!media-gfx/fbi
 	>=media-libs/fontconfig-2.2
 	>=media-libs/freetype-2.0
-	media-libs/libepoxy
 	media-libs/libexif
 	virtual/jpeg:*
 	virtual/ttf-fonts
