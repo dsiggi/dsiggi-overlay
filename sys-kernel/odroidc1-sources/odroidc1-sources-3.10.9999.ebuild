@@ -36,8 +36,3 @@ src_unpack()
 	unpack_set_extraversion
 }
 
-src_prepare()
-{
-	epatch "${FILESDIR}/spicc.patch"
-
-}
