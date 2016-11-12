@@ -8,7 +8,7 @@ inherit eutils
 
 DESCRIPTION="A 'wiring' like library for the Raspberry Pi"
 HOMEPAGE="http://wiringpi.com/"
-SRC_URI="https://git.drogon.net/?p=wiringPi;a=snapshot;h=78b5c323b74de782df58ee558c249e4e4fadd25f;sf=tgz -> ${P}.tar.gz"
+SRC_URI="http://git.drogon.net/?p=wiringPi;a=snapshot;h=78b5c323b74de782df58ee558c249e4e4fadd25f;sf=tgz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
