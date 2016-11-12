@@ -16,9 +16,9 @@ SLOT="0"
 KEYWORDS="~arm"
 IUSE=""
 
-RDEPEND=""
+RDEPEND="media-libs/raspberrypi-userland"
 DEPEND="${RDEPEND}
-		dev-util/cmake"
+	dev-util/cmake"
 
 if [ -d /opt/vc ]; then
 	append-flags "-I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux"
