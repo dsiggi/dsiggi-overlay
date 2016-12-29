@@ -21,7 +21,8 @@ IUSE=""
 
 DEPEND="
 	${PYTHON_DEPS}
-	dev-python/pygame[fbcon]
+	dev-python/pygame
+	media-libs/libsdl[fbcon]
 	dev-python/urllib3
 	dev-python/json-rpc
 "
