@@ -23,7 +23,7 @@ DEPEND="
 	${PYTHON_DEPS}
 	dev-python/pygame[fbcon]
 	dev-python/urllib3
-	dev-python/JSON
+	dev-python/json-rpc
 "
 RDEPEND="${DEPEND}"
 
