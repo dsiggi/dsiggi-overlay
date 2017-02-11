@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -24,10 +24,12 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-0_p20150421-Makefile.patch
+	epatch "${FILESDIR}"/Makefile.patch
 
 	cat > Makefile.include << EOF
 LIBS=-lvchiq_arm -lvcos -lbcm_host -lEGL -lGLESv2 -lopenmaxil -lrt -lpthread
+LDFLAGS                        += -L/opt/vc/lib/
+INCLUDES               += -isystem/opt/vc/include -isystem/opt/vc/include/interface/vcos/pthreads
 EOF
 
 	tc-export CXX
@@ -41,3 +43,4 @@ src_install() {
 	dobin ${PN} ${PN}.bin
 	dodoc README.md
 }
+
