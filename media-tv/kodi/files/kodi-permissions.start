@@ -34,7 +34,12 @@ FILES="/sys/class/graphics/fb0/mode \
 /sys/modules/di/parameters/bypass_all \
 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq \
 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq \
-/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor \
+/sys/class/vfm/map \
+/sys/module/amlvideodri/parameters/freerun_mode \
+/sys/module/amvideo/parameters/omx_pts \
+/sys/class/ppmgr/ppmgr_3d_mode"
+
 
 for f in $FILES; do
 	if [ -f $f ]; then
