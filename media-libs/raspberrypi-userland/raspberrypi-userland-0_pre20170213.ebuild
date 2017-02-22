@@ -17,8 +17,6 @@ LICENSE="BSD"
 SLOT="0"
 
 src_prepare() {
-	epatch "${FILESDIR}"/"${P}".patch
-
 	# init script for Debian, not useful on Gentoo
 	sed -i "/DESTINATION \/etc\/init.d/,+2d" interface/vmcs_host/linux/vcfiled/CMakeLists.txt || die
 }
