@@ -18,6 +18,6 @@ KEYWORDS="~arm"
 IUSE=""
 
 DEPEND="
-	=media-tv/kodi-16*
+	media-tv/kodi
 	media-libs/kodiplatform
 	"
