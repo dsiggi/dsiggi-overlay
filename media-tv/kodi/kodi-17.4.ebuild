@@ -78,7 +78,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
         media-libs/freetype
         >=media-libs/libass-0.13.4
         >=media-libs/taglib-1.11.1
-        system-ffmpeg? ( >=media-video/ffmpeg-${FFMPEG_VERSION}:=[encode,openssl,postproc] )
+        system-ffmpeg? ( =media-video/ffmpeg-${FFMPEG_VERSION}:=[encode,openssl,postproc] )
         mysql? ( virtual/mysql )
         >=net-misc/curl-7.51.0
         nfs? ( net-fs/libnfs:= )
@@ -90,7 +90,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
         udev? ( virtual/udev )
         webserver? ( >=net-libs/libmicrohttpd-0.9.50[messages] )
         zeroconf? ( net-dns/avahi[dbus] )
-        raspberrypi? ( system-ffmpeg? ( >=media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal,omx-rpi] )
+        raspberrypi? ( system-ffmpeg? ( =media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal,omx-rpi] )
                         media-libs/raspberrypi-userland )
         odroidc1? ( media-libs/aml-odroidc11
                         media-libs/odroidc1-mali-fb )
