@@ -92,8 +92,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
         zeroconf? ( net-dns/avahi[dbus] )
         raspberrypi? ( system-ffmpeg? ( =media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal,omx-rpi] )
                         media-libs/raspberrypi-userland )
-        odroidc1? ( media-libs/aml-odroidc11
-                        media-libs/odroidc1-mali-fb )
+        odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
         "
 RDEPEND="${COMMON_DEPEND}
         udisks? ( sys-fs/udisks:0 )
