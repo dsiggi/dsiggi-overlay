@@ -25,6 +25,7 @@ src_unpack() {
 src_prepare() {
 	cd ${WORKDIR}/${P}
 	epatch "${FILESDIR}"/000_change_abi.patch
+	epatch "${FILESDIR}"/fw_env_aml.c.patch
 }
 
 src_compile() {

@@ -1,0 +1,13 @@
+--- tools/env/fw_env_aml.c	2017-12-24 15:00:02.844557000 +0100
++++ tools/env/fw_env_aml.c	2017-12-24 15:00:22.234557000 +0100
+@@ -34,9 +34,9 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include <stdint.h>
+ 
+ #ifdef MTD_OLD
+-# include <stdint.h>
+ # include <linux/mtd/mtd.h>
+ #else
+ # define  __user	/* nothing */
