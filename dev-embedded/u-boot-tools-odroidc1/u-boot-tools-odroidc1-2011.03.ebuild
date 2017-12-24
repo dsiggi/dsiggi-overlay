@@ -7,7 +7,7 @@ ETYPE=sources
 
 inherit eutils git-r3 versionator
 
-EGIT_REPO_URI=git://github.com/hardkernel/u-boot.git
+EGIT_REPO_URI=https://github.com/hardkernel/u-boot.git
 EGIT_BRANCH="odroidc-v$(get_version_component_range 1-2)"
 EGIT_CHECKOUT_DIR="$S"
 
