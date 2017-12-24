@@ -90,7 +90,8 @@ COMMON_DEPEND="${PYTHON_DEPS}
         udev? ( virtual/udev )
         webserver? ( >=net-libs/libmicrohttpd-0.9.50[messages] )
         zeroconf? ( net-dns/avahi[dbus] )
-        raspberrypi? ( system-ffmpeg? ( =media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal,omx-rpi] )
+        raspberrypi? ( system-ffmpeg? ( >=media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal,omx-rpi] 
+                                        <media-video/ffmpeg-3.4 )
                         media-libs/raspberrypi-userland )
         odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
         "
