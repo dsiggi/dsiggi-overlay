@@ -15,7 +15,7 @@ detect_arch
 
 inherit git-r3 versionator
 
-EGIT_REPO_URI="git://github.com/hardkernel/linux.git"
+EGIT_REPO_URI="https://github.com/hardkernel/linux.git"
 EGIT_BRANCH="odroidc-$(get_version_component_range 1-2).y"
 EGIT_CHECKOUT_DIR="$S"
 
