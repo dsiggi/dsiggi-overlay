@@ -26,6 +26,8 @@ src_prepare() {
 	cd ${WORKDIR}/${P}
 	epatch "${FILESDIR}"/000_change_abi.patch
 	epatch "${FILESDIR}"/fw_env_aml.c.patch
+	epatch "${FILESDIR}"/config.mk.patch
+	cp "${FILESDIR}"/compiler-gcc5.h include/linux/
 }
 
 src_compile() {
