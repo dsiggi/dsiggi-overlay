@@ -2,7 +2,7 @@ EAPI=5
 
 inherit git-r3
 
-EGIT_REPO_URI="git://github.com/mdrjr/c1_mali_libs.git"
+EGIT_REPO_URI="https://github.com/mdrjr/c1_mali_libs.git"
 
 DESCRIPTION="Closed source framebuffer drivers for Mali-400 Odroid-C1"
 HOMEPAGE="https://github.com/mdrjr/c1_mali_libs.git"
