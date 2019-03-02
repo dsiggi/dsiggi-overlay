@@ -98,7 +98,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
         x11-libs/libdrm
         x11-libs/libxkbcommon
         zeroconf? ( net-dns/avahi[dbus] )
-        raspberrypi? ( system-ffmpeg? ( >=media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal,omx-rpi] )
+        raspberrypi? ( system-ffmpeg? ( >=media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal] )
                        >=media-libs/raspberrypi-userland-0_pre20190115 )
         odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
         "
@@ -189,7 +189,6 @@ src_configure() {
                 -DENABLE_DBUS=$(usex dbus)
                 -DENABLE_DVDCSS=$(usex css)
                 -DENABLE_INTERNAL_CROSSGUID=ON
-                -DENABLE_INTERNAL_FFMPEG=$(usex !system-ffmpeg)
                 -DENABLE_CAP=$(usex caps)
                 -DENABLE_LIRC=$(usex lirc)
                 -DENABLE_MICROHTTPD=$(usex webserver)
@@ -208,7 +207,7 @@ src_configure() {
                 -DENABLE_OPENGL=OFF
                 -DENABLE_VDPAU=OFF
                 -DENABLE_VAAPI=OFF
-                _DENABLE_X11=OFF
+                -DENABLE_X11=OFF
                 -DENABLE_XSLT=OFF
                 -Dlibdvdread_URL="${DISTDIR}/libdvdread-${LIBDVDREAD_VERSION}.tar.gz"
                 -Dlibdvdnav_URL="${DISTDIR}/libdvdnav-${LIBDVDNAV_VERSION}.tar.gz"
@@ -229,9 +228,9 @@ src_configure() {
         fi
 
         if use system-ffmpeg; then
-                mycmakeargs+=( -DWITH_FFMPEG="yes" )
+                mycmakeargs+=( -DENABLE_INTERNAL_FFMPEG=OFF)
         else
-                mycmakeargs+=( -DFFMPEG_URL="${DISTDIR}/ffmpeg-${PN}-${FFMPEG_VERSION}-${CODENAME}-${FFMPEG_KODI_VERSION}.tar.gz" )
+                mycmakeargs+=( -DENABLE_INTERNAL_FFMPEG=ON -DFFMPEG_URL="${DISTDIR}/ffmpeg-${PN}-${FFMPEG_VERSION}-${CODENAME}-${FFMPEG_KODI_VERSION}.tar.gz" )
         fi
 
         cmake-utils_src_configure
