@@ -34,6 +34,6 @@ src_install() {
 	newins ${WORKDIR}/${PF}/src/xorg.conf xorg.conf.mali 
 }
 
-src_postinst() {
+pkg_postinst() {
 	elog "A example xorg.conf has installed to: /etc/X11/xorg.conf.mali"
 }
