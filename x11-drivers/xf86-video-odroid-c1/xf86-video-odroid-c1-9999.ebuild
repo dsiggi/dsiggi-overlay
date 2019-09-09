@@ -27,6 +27,8 @@ src_compile() {
 }
 
 src_install() {
+	insopts -m755
+
 	insinto /usr/lib/xorg/modules/drivers
 	doins ${WORKDIR}/${PF}/ src/.libs/mali_drv.so
 
