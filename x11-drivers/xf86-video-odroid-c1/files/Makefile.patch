@@ -1,0 +1,13 @@
+diff -ruN xf86-video-odroid-c1-9999/src/Makefile.old xf86-video-odroid-c1-9999/src/Makefile
+--- xf86-video-odroid-c1-9999/src/Makefile.old	2019-09-09 14:27:28.000000000 +0200
++++ xf86-video-odroid-c1-9999/src/Makefile	2019-09-09 14:20:46.000000000 +0200
+@@ -266,7 +266,8 @@
+ 	-I$(MALI_DDK)/include \
+ 	-I$(MALI_DDK)/3rdparty/include/khronos \
+ 	-I$(MALI_DDK)/src/ump/include \
+-	-I$(MALI_DDK)/src/devicedrv
++	-I$(MALI_DDK)/src/devicedrv \
++	-I/usr/lib/opengl/mali/include
+ 
+ mali_drv_la_SOURCES = \
+ 	mali_dri.c \
