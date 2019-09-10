@@ -7,7 +7,7 @@ index 0f9bffe..910723b 100755
  #
  
 -CROSS_COMPILE ?= arm-none-eabi-
-+CROSS_COMPILE ?= armv7a-hardfloat-linux-gnueabi-
++CROSS_COMPILE ?= armv7a-unknown-linux-gnueabihf-
  #arm-linux-
  
  ifeq ($(BOARD),omap2420h4)
@@ -16,7 +16,7 @@ index 0f9bffe..910723b 100755
 +++ arch/aml/cpu/aml_meson/config.mk	2016-09-24 22:10:19.537888650 +0200
 @@ -1,4 +1,4 @@
 -CROSS_COMPILE?=arm-none-eabi-
-+CROSS_COMPILE?=armv7a-hardfloat-linux-gnueabi
++CROSS_COMPILE?=armv7a-unknown-linux-gnueabihf-
  ARM_CPU=cortex-a9
  PLATFORM_CPPFLAGS += $(call cc-option,-mcpu=cortex-a9 -ffixed-r8 -mno-long-calls  -Wall -fPIC )
  PF_CPPFLAGS_NO_UNALIGNED := $(call cc-option, -mno-unaligned-access,)
@@ -29,7 +29,7 @@ index 0f9bffe..910723b 100755
  ifdef CONFIG_AML_MESON 
  HOSTSRCS	:=  fw_env_aml.c 
 -HOSTCC = arm-none-linux-gnueabi-gcc
-+HOSTCC = armv7a-hardfloat-linux-gnueabi-gcc
++HOSTCC = armv7a-unknown-linux-gnueabihf-gcc
  else
  HOSTSRCS := fw_env.c 
  endif
