@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
@@ -35,3 +35,9 @@ src_unpack()
 	unpack_set_extraversion
 }
 
+src_install()
+{
+        INSTALL_DIR="/usr/src/linux-${PV}-odroidc1"
+        dodir ${INSTALL_DIR}
+        cp -R "${S}"/* "${D}""${INSTALL_DIR}"/ || die "Install failed!"
+}
