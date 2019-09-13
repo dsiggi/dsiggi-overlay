@@ -18,24 +18,28 @@ KEYWORDS="~arm"
 IUSE="openrc -systemd"
 
 REQUIRED_USE="^^ ( openrc systemd )"
-        
+
 DEPEND="sys-apps/fbset"
 
 S=${WORKDIR}/c1_bootini-${COMMIT}
 
+src_compile() {
+	rm "${S}"/Makefile
+}
+
 src_install() {
         into /usr/bin
 	dobin ${S}/c1_init.sh
-	
+
 	insinto /usr/share/${PN}
 	doins ${S}/boot.ini
-	
+
 	insinto /etc/sysctl.d
 	doins ${S}/99-c1-network.conf
-	
+
 	insinto /lib/udev/rules.d
 	doins ${S}/99-gpiomem.rules
-	
+
 	if use openrc; then
 		insinto /etc/init.d
 		doins ${FILESDIR}/c1_init
@@ -45,7 +49,7 @@ src_install() {
 	fi
 }
 
-kg_postinst() {
+pkg_postinst() {
 	if use openrc; then
 		elog "The c1_init-script has installed for openrc."
 		elog "Please add it to runleven by:"
