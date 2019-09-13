@@ -28,7 +28,7 @@ src_compile() {
 }
 
 src_install() {
-        into /usr/bin
+        insinto /usr/bin
 	doins ${S}/c1_init.sh
 
 	insinto /usr/share/${PN}
