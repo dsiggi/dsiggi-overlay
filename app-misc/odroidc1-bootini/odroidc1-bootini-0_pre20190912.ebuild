@@ -29,7 +29,7 @@ src_compile() {
 
 src_install() {
         into /usr/bin
-	dobin ${S}/c1_init.sh
+	doins ${S}/c1_init.sh
 
 	insinto /usr/share/${PN}
 	doins ${S}/boot.ini
