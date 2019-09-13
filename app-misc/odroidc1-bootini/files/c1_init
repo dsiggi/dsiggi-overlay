@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+# Distributed under the terms of the GNU General Public License v2
+
+description="Setting up framebuffer for OdroidC1"
+
+depend() {
+       need localmount
+}
+
+start() {
+        ebegin "Starting c1_init"
+        eval /usr/bin/c1_init.sh
+        retval=$?
+        veend ${retval} "Execution of \"c1_init.sh\" failed."
+} 
