@@ -14,14 +14,12 @@ CROSSGUID_VERSION="8f399e8bd4"
 FFMPEG_VERSION="4.0.3"
 FFMPEG_KODI_VERSION="RC5"
 CODENAME="Leia"
-ODROID_COMMIT="8cfdc895f3678fc56aef221711b58854cd761378"
 
 SRC_URI="https://github.com/xbmc/libdvdcss/archive/${LIBDVDCSS_VERSION}.tar.gz -> libdvdcss-${LIBDVDCSS_VERSION}.tar.gz
         https://github.com/xbmc/libdvdread/archive/${LIBDVDREAD_VERSION}.tar.gz -> libdvdread-${LIBDVDREAD_VERSION}.tar.gz
         https://github.com/xbmc/libdvdnav/archive/${LIBDVDNAV_VERSION}.tar.gz -> libdvdnav-${LIBDVDNAV_VERSION}.tar.gz
         https://github.com/xbmc/crossguid/archive/${CROSSGUID_VERSION}.tar.gz -> crossguid-${CROSSGUID_VERSION}.tar.gz
-        !raspberrypi? ( https://github.com/xbmc/xbmc/archive/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz )
-        !odroidc1? ( https://github.com/owersun/xbmc/archive/${ODROID_COMMIT}.tar.gz )
+        https://github.com/xbmc/xbmc/archive/${PV}-${CODENAME}.tar.gz -> ${P}.tar.gz
         !system-ffmpeg? ( https://github.com/xbmc/FFmpeg/archive/${FFMPEG_VERSION}-${CODENAME}-${FFMPEG_KODI_VERSION}.tar.gz -> ffmpeg-${PN}-${FFMPEG_VERSION}-${CODENAME}-${FFMPEG_KODI_VERSION}.tar.gz )"
 
 DESCRIPTION="Kodi is a free and open source media-player and entertainment hub (Special ebuild for raspberrypi/odroidc1"
@@ -37,7 +35,7 @@ SLOT="0"
 # use flag is called libusb so that it doesn't fool people in thinking that
 # it is _required_ for USB support. Otherwise they'll disable udev and
 # that's going to be worse.
-IUSE="airplay alsa bluetooth bluray caps cec css dbus debug dvd joystick -libressl libusb lirc mariadb midi mysql nfs nonfree odroidc1 profile pulseaudio raspberrypi +samba sftp ssl +system-ffmpeg test texturepacker udisks upnp upower +udev webserver zeroconf"
+IUSE="airplay alsa bluetooth bluray caps cec css dbus debug dvd joystick -libressl libusb lirc mariadb midi mysql nfs nonfree profile pulseaudio +raspberrypi +samba sftp ssl +system-ffmpeg test texturepacker udisks upnp upower +udev webserver zeroconf"
 
 REQUIRED_USE="
         ${PYTHON_REQUIRED_USE}
@@ -45,7 +43,6 @@ REQUIRED_USE="
         udev? ( !libusb )
         udisks? ( dbus )
         upower? ( dbus )
-        ^^ ( raspberrypi odroidc1 )
 "
 
 COMMON_DEPEND="${PYTHON_DEPS}
@@ -103,7 +100,6 @@ COMMON_DEPEND="${PYTHON_DEPS}
         zeroconf? ( net-dns/avahi[dbus] )
         raspberrypi? ( system-ffmpeg? ( >=media-video/ffmpeg-${FFMPEG_VERSION}:=[mmal] )
                        >=media-libs/raspberrypi-userland-0_pre20190115 )
-	odroidc1? ( media-libs/aml-odroidc1 media-libs/odroidc1-mali-fb )
         "
 RDEPEND="${COMMON_DEPEND}
         lirc? ( app-misc/lirc )
@@ -137,7 +133,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	default
+        default
 }
 
 src_prepare() {
@@ -214,7 +210,6 @@ src_configure() {
 )
 
         use raspberrypi && mycmakeargs+=( -DCORE_PLATFORM_NAME=rbpi -DENABLE_NEON=YES -DWITH_CPU=cortex-a7 )
-        use odroidc1 && mycmakeargs+=( -DCORE_PLATFORM_NAME=aml -DENABLE_AML=ON )
 
         if use raspberrypi; then
                 if [ -d /opt/vc ]; then
