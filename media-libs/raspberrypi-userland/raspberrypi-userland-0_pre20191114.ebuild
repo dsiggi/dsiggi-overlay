@@ -9,7 +9,7 @@ inherit cmake-utils flag-o-matic
 DESCRIPTION="Raspberry Pi userspace tools and libraries"
 HOMEPAGE="https://github.com/raspberrypi/userland"
 
-GIT_COMMIT="3e0bbcfea3af190410041468287312890e1565f2"
+GIT_COMMIT="3e0bbcf"
 SRC_URI="https://github.com/raspberrypi/userland/tarball/${GIT_COMMIT} -> ${P}.tar.gz"
 KEYWORDS="~arm"
 S="${WORKDIR}/raspberrypi-userland-${GIT_COMMIT}"
