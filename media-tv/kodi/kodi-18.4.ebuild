@@ -66,8 +66,8 @@ COMMON_DEPEND="${PYTHON_DEPS}
         dev-libs/libxslt
         >=dev-libs/lzo-2.04
         dev-libs/tinyxml[stl]
-        dev-python/pillow[${PYTHON_USEDEP}]
-        $(python_gen_cond_dep 'dev-python/pycryptodome[${PYTHON_USEDEP}]' 'python3*')
+        $(python_gen_cond_dep 'dev-python/pillow[${PYTHON_MULTI_USEDEP}]')
+        $(python_gen_cond_dep 'dev-python/pycryptodome[${PYTHON_MULTI_USEDEP}]' 'python3*')
         >=dev-libs/libcdio-0.94
         dev-libs/libfmt
         dev-libs/libfstrcmp

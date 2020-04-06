@@ -65,7 +65,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
         >=dev-libs/lzo-2.04
         dev-libs/tinyxml[stl]
         >=dev-libs/yajl-2
-        dev-python/pillow[${PYTHON_USEDEP}]
+        $(python_gen_cond_dep 'dev-python/pycryptodome[${PYTHON_MULTI_USEDEP}]' 'python3*')
         dev-libs/libcdio
         libusb? ( virtual/libusb:1 )
         media-fonts/corefonts
