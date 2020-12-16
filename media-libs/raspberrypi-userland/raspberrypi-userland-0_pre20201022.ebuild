@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit cmake-utils flag-o-matic udev
+inherit cmake flag-o-matic udev
 
 DESCRIPTION="Raspberry Pi userspace tools and libraries"
 HOMEPAGE="https://github.com/raspberrypi/userland"
