@@ -109,6 +109,7 @@ RDEPEND="${COMMON_DEPEND}
 	!media-tv/xbmc
 	udisks? ( sys-fs/udisks:2 )
 	upower? ( sys-power/upower )
+	x11-misc/xkeyboard-config
 "
 DEPEND="${COMMON_DEPEND}
 	app-arch/bzip2
