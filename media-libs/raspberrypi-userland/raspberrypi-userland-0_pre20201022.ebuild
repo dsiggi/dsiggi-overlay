@@ -33,7 +33,7 @@ src_configure() {
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	doenvd "${FILESDIR}"/04${PN}
 
