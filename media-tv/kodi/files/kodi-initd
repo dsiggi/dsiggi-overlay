@@ -3,6 +3,8 @@
 
 description="Start and stop Kodi"
 
+EXEC="/usr/bin/kodi-standalone"
+
 depend() {
 	need net
 	need localmount
@@ -14,14 +16,19 @@ start() {
 	if [ -z $KODI_USER ]; then
 			eend "No user defined in /etc/conf.d/kodi"
 	fi
-	
-	start-stop-daemon --background --start --make-pidfile --pidfile /var/run/kodi.pid -u ${KODI_USER} --exec /usr/bin/kodi-standalone ${KODI_OPTS}
+
+	start-stop-daemon --start --quiet --chuid $KODI_USER --background --exec $EXEC -- $KODI_OPTS
+
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping kodi"
-	start-stop-daemon --stop --pidfile /var/run/kodi.pid
-	eend $?
+
+	for p in $(ps ax | grep kodi | grep standalone | cut -d" " -f1); do
+		kill -9 $p
+	done
+
+ 	eend 0
 }
 
