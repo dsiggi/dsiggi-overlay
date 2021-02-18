@@ -45,7 +45,7 @@ src_install() {
 		doins ${FILESDIR}/c1_init
 	elif use systemd; then
 		insinto /etc/systemd/systemd
-		doins ${FILESDIR}/c1_boot.service
+		doins ${FILESDIR}/c1_init.service
 	fi
 }
 
