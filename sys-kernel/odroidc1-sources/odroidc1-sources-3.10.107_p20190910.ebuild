@@ -1,14 +1,14 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI="6"
 
-ETYPE=sources
+ETYPE="sources"
 K_DEFCONFIG="odroidc_defconfig"
 K_SECURITY_UNSUPPORTED=1
 EXTRAVERSION="-${PN}/-*"
 
-inherit kernel-2 versionator
+inherit kernel-2
 
 detect_version
 detect_arch
@@ -26,7 +26,7 @@ RDEPEND="
 	|| ( dev-embedded/u-boot-tools-odroidc1 dev-embedded/u-boot-tools )
 	sys-devel/bc
 	"
-	
+
 S=${WORKDIR}/linux-${COMMIT}
 
 src_unpack()
