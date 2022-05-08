@@ -1,20 +1,20 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
+EAPI="8"
 
 ETYPE="sources"
 K_DEFCONFIG="odroidc_defconfig"
 K_SECURITY_UNSUPPORTED=1
 EXTRAVERSION="-${PN}/-*"
 
-inherit kernel-2 git-r3 versionator
+inherit kernel-2 git-r3 linux-info
 
 detect_version
 detect_arch
 
 EGIT_REPO_URI="https://github.com/hardkernel/linux.git"
-EGIT_BRANCH="odroidc-$(get_version_component_range 1-2).y"
+EGIT_BRANCH="odroidc-$(ver_cut 1-2).y"
 EGIT_CHECKOUT_DIR="$S"
 
 DESCRIPTION="Linux source for Odroid devices"

@@ -1,14 +1,14 @@
-# Copyright 1999-2021 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
+EAPI="8"
 
 ETYPE="sources"
 K_DEFCONFIG="odroidc_defconfig"
 K_SECURITY_UNSUPPORTED=1
 EXTRAVERSION="-${PN}/-*"
 
-inherit kernel-2
+inherit kernel-2 linux-info
 
 detect_version
 detect_arch
