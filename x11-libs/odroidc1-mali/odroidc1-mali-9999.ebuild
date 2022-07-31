@@ -1,11 +1,13 @@
-EAPI=5
+## Copyright 1999-2022 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
 
-inherit git-r3 eutils
+EAPI=7
 
-EGIT_REPO_URI="git://github.com/mdrjr/c1_mali_libs.git"
+inherit eutils
 
 DESCRIPTION="Closed source drivers for Mali-400 Odroid-C1"
-HOMEPAGE="https://github.com/mdrjr/c1_mali_libs.git"
+HOMEPAGE="https://github.com/mdrjr/c1_mali_libs"
+SRC_URI="https://github.com/mdrjr/c1_mali_libs/archive/refs/heads/master.zip -> $P.zip"
 
 SLOT="0"
 KEYWORDS=""
@@ -17,8 +19,11 @@ DEPEND="
 RDEPEND="${DEPEND}
 	media-libs/mesa[gles1,gles2]"
 
+S=${WORKDIR}/c1_mali_libs-master
+
 src_prepare() {
-	epatch "${FILESDIR}/0001-Fix-Makefiles.patch"
+	eapply "${FILESDIR}/0001-Fix-Makefiles.patch"
+	eapply_user
 }
 
 src_compile() {
