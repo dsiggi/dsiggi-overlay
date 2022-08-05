@@ -1,4 +1,4 @@
-EAPI=5
+EAPI=7
 
 inherit git-r3 eutils
 
@@ -14,7 +14,8 @@ IUSE=""
 DEPEND="!x11-libs/odroidc1-mali
 	!x11-libs/mesa"
 src_prepare() {
-	epatch "${FILESDIR}/0001-Fix-Makefiles.patch"
+	eapply "${FILESDIR}/0001-Fix-Makefiles.patch"
+	eapply_user
 }
 
 src_compile() {
