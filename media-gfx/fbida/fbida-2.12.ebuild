@@ -1,8 +1,8 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=7
 inherit eutils toolchain-funcs
 
 DESCRIPTION="Image viewers for the framebuffer console (fbi) and X11 (ida)"
@@ -51,12 +51,13 @@ RDEPEND="
 "
 
 src_prepare() {
-	epatch \
+	eapply \
 		"${FILESDIR}"/ida-desktop.patch \
 		"${FILESDIR}"/${PN}-2.12-giflib-4.2.patch \
 		"${FILESDIR}"/${PN}-2.12-fprintf-format.patch \
 		"${FILESDIR}"/no-cairo-gl.patch \
 		"${FILESDIR}"/no-egl.patch
+	eapply_user
 
 	tc-export CC CPP
 
