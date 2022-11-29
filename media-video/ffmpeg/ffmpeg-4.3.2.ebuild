@@ -331,6 +331,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-4.3-fix-build-without-SSSE3.patch
 	"${FILESDIR}"/${PN}-4.3-altivec-novsx-yuv2rgb.patch
 	"${FILESDIR}"/ffmpeg-001-rpi.patch
+	"${FILESDIR}"/build-fix-for-dav1d-1.0.0.patch
 )
 
 MULTILIB_WRAPPED_HEADERS=(
