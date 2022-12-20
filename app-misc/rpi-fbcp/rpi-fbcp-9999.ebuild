@@ -1,10 +1,10 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="6"
+EAPI=8
 
-inherit eutils git-r3 cmake-utils flag-o-matic
+inherit git-r3 cmake flag-o-matic
 
 
 DESCRIPTION="Raspberry Pi utility. Used for mirror primary framebuffer to secondary framebuffer."
