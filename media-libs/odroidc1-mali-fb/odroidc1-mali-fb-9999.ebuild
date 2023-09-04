@@ -1,6 +1,6 @@
 EAPI=7
 
-inherit git-r3 eutils
+inherit git-r3
 
 EGIT_REPO_URI="https://github.com/mdrjr/c1_mali_libs.git"
 

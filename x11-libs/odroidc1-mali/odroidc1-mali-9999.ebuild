@@ -3,8 +3,6 @@
 
 EAPI=7
 
-inherit eutils
-
 DESCRIPTION="Closed source drivers for Mali-400 Odroid-C1"
 HOMEPAGE="https://github.com/mdrjr/c1_mali_libs"
 SRC_URI="https://github.com/mdrjr/c1_mali_libs/archive/refs/heads/master.zip -> $P.zip"

@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Foundation
+# Copyright 1999-2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=7
-inherit eutils toolchain-funcs
+inherit toolchain-funcs
 
 DESCRIPTION="Image viewers for the framebuffer console (fbi) and X11 (ida)"
 HOMEPAGE="http://www.kraxel.org/blog/linux/fbida/"

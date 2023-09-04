@@ -1,6 +1,6 @@
 EAPI=7
 
-inherit git-r3 eutils flag-o-matic
+inherit git-r3 flag-o-matic
 
 EGIT_REPO_URI="https://github.com/mdrjr/c1_mali_ddx.git"
 
